@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Wiki Encrypt</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+        form {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 470px; /* Ancho fijo del formulario */
+            margin: 0 auto; /* Centrar el formulario en la página */
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .password-container {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 55%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        img {
+            vertical-align: middle;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .resultado-container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Arial', sans-serif;
+            resize: vertical; /* Permitir la redimensión vertical del textarea */
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        #error {
+            margin-top: 20px;
+            color: #ff5252; /* Color rojo para el mensaje de error */
+        }
+    </style>
+</head>
+<body>
+    <form action="/" method="post">
+        <h1>WikiEncrypt</h1>
+        <label for="texto">Texto a encriptar/desencriptar:</label>
+        <input type="text" name="texto" id="texto" required>
+        <br>
+        <div class="password-container">
+            <label for="clave">Clave fijada:</label>
+            <input type="password" name="clave" id="clave" required>
+            <span class="toggle-password" onclick="togglePassword()">
+                <img id="eye-icon" src="/static/mostrar.png" alt="Mostrar">
+            </span>
+        </div>
+        <br>
+        <button type="submit" name="encriptar">Encriptar</button>
+        <button type="submit" name="desencriptar">Desencriptar</button>
+
+        {% if error_message %}
+            <div id="error">
+                <p><strong>Error:</strong> {{ error_message }}</p>
+            </div>
+        {% endif %}
+
+        {% if resultado %}
+            {% if resultado == '/static/IncorrectPassword.gif' %}
+                <div id="resultado-gif">
+                    <img src="{{ resultado }}" alt="Incorrect Password" width="300">
+                </div>
+                <style>
+                    /* Ocultar botones y campos de texto cuando se muestra el gif */
+                    #texto, #clave, button, #eye-icon,label[for="texto"], label[for="clave"] {
+                        display: none;
+                    }
+                </style>
+            {% else %}
+                <div id="resultado">
+                    <h2>Resultado:</h2>
+                    <div class="resultado-container">
+                        <textarea rows="5" readonly>{{ resultado | safe }}</textarea>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </form>
+
+    <script>
+        function togglePassword() {
+            var claveInput = document.getElementById("clave");
+            var eyeIcon = document.getElementById("eye-icon");
+
+            if (claveInput.type === "password") {
+                claveInput.type = "text";
+                eyeIcon.src = "/static/ocultar.png";
+            } else {
+                claveInput.type = "password";
+                eyeIcon.src = "/static/mostrar.png";
+            }
+        }
+    </script>
+</body>
+</html>
