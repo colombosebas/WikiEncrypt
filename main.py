@@ -32,7 +32,7 @@ def decrypt_text(text, key):
     cipher = Fernet(key)
     return cipher.decrypt(text.encode('utf-8')).decode('utf-8')
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/WikiEncrypt', methods=['GET', 'POST'])
 def index():
     resultado = ''
     error_message = ''

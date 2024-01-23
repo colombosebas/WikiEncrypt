@@ -92,6 +92,12 @@
             margin-top: 20px;
             color: #ff5252; /* Color rojo para el mensaje de error */
         }
+        #esquina-inferior-izquierda {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -138,7 +144,9 @@
             {% endif %}
         {% endif %}
     </form>
-
+    <div id="esquina-inferior-izquierda">
+        <p style="color: gray; font-size: small; font-style: italic;">By Dennis Nedry</p>
+    </div>
     <script>
         function togglePassword() {
             var claveInput = document.getElementById("clave");
