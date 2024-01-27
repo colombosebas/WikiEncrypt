@@ -4,16 +4,6 @@ from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 
-def generate_key():
-    return Fernet.generate_key()
-
-# Luego puedes utilizar esta función para generar una nueva clave
-# y almacenarla de alguna manera segura, por ejemplo, en una variable de entorno.
-
-# Nueva clave generada
-nueva_clave = generate_key()
-print(nueva_clave)
-
 
 # Obtener la clave de cifrado desde la variable de entorno
 clave_env = os.environ.get('PV_WIKI_PASS')
